@@ -15,6 +15,8 @@ warnings.simplefilter('ignore')
 
 #世界銀行データAPI
 import wbgapi as wb 
+import japanize_matplotlib
+import numpy as np
 
 #インデックスにアクセスした瞬間に日本の人口データをDBに登録する
 def index(request):
@@ -32,17 +34,29 @@ def index(request):
 
     return render(request, 'Country_population/index.html')
 
-#グラフ作成
-def setPlt():
-    x = ["07/01", "07/02", "07/03", "07/04", "07/05", "07/06", "07/07"]
-    y = [3, 5, 0, 5, 6, 10, 2]
-    plt.bar(x, y, color='#00d5ff')
-    plt.title(r"$\bf{Running Trend  -2020/07/07}$", color='#3407ba')
-    plt.xlabel("Date")
-    plt.ylabel("km")
 
-# SVG化
-def plt2svg():
+def plot_pop_creat():
+    #ここを関数化したい
+    x_list = Population.objects.all().values('year')
+    y_list = Population.objects.all().values('population')
+
+    x = []
+    for item in x_list:
+        x.append(item['year'])
+
+    y = []
+    for item in y_list:
+        y.append(item['population'])
+
+    plt.bar(x, y, color='#00d5ff')
+    plt.title(r"人口推移", color='#000000')
+    #plt.xticks(np.arange(0, 50, 5))
+    plt.xlabel("年")
+    plt.ylabel("人口")
+    return plt
+
+#SVG化
+def plot_con_svg(plt):
     buf = io.BytesIO()
     plt.savefig(buf, format='svg', bbox_inches='tight')
     s = buf.getvalue()
@@ -51,9 +65,8 @@ def plt2svg():
 
 # 実行するビュー関数
 def get_svg(request):
-    setPlt()  
-    svg = plt2svg()  #SVG化
+    plt = plot_pop_creat()  
+    svg = plot_con_svg(plt)  #SVG化
     plt.cla()  # グラフをリセット
     response = HttpResponse(svg, content_type='image/svg+xml')
     return response
-# Create your views here.
