@@ -1,0 +1,132 @@
+
+
+World Statistics Projectの概要
+
+・自分のポートフォリオ兼趣味として、世界銀行のAPIを使用して様々なデータを簡単に可視化できるサイトを作る
+
+
+フェーズ１
+・最初はトップページで、世界の人口を表示できるページを作成することを目標にする
+
+
+
+
+自分のWEBサイトを作る
+======World Statistics Project=======
+・コマンド
+#django-admin startproject World_Statistics_Project
+
+・プロジェクトの起動
+#python manage.py runserver 
+
+・アプリの作成
+#python manage.py startapp Country_population
+
+・アプリのurlの管理はアプリ内のurls.pyで完結させるためにアプリ内にurls.pyを作成する
+urls.pyをアプリ内に作成する
+
+
+・必要なモデル（データベース）を作成したらマイグレーションファイルを作成する
+#python manage.py makemigrations Country_population
+
+
+・マイグレーションを実行する
+#python manage.py migrate
+
+・管理画面の作成
+#python manage.py createsuperuser
+
+
+・データは大体CCBY4（商用利用可能、出典明示必要）ぽいが、データごとに確認した方が良さそう
+
+
+========================================
+
+
+
+
+
+
+
+
+・新しいプロジェクトを作成するコマンド
+django-admin startproject プロジェクト名
+
+・プロジェクトのプログラムの実行するコマンド
+python manage.py runserver 
+
+・djangoの最低限の操作
+プロジェクトを作り、ファイルを作成して、試験サーバーで動作チェックをする
+By 書籍引用 p.40
+
+
+・djangoはプロジェクトの中に、複数のアプリケーションを実装することで様々な機能を追加できる。
+
+・プロジェクトの中に、アプリケーションを追加するコマンド
+python manage.py startapp アプリ名
+
+・migrationsフォルダ
+データベース関係のファイルがまとめられている
+
+・HttpResponseとは、クライアント（WEBブラウザとかのこと）に送り返す内容をまとめたクラスのこと。
+
+・views.pyにurlのリストを記載して、どのWEBブラウザにアクセスしたらどういう処理をするのかを指定する。
+
+・path(アクセスするアドレス, 呼び出す処理)
+
+・アプリケーション内のアドレスはアプリケーション内で完結させる
+
+・プロジェクトのアプリ内のurlは
+Http://〇〇/アプリ名/〜のアドレスになる。
+
+
+・includeは引数に指定したモジュールを読み込む処理
+各アプリケーションのurls.pyに、各アプリケーションのurlでの処理は聞くように指定している
+
+・クエリパラメーター、長いurlこれで、SQL文みたいにdbの必要な情報を指定してデータを取得している
+書き方として
+「普通のアドレス？キー＝値&キー＝値」
+というルールらしい
+
+・テンプレートはアプリケーションごとに、作成する
+
+・render関数はレンダリングを行う関数。
+レンダリング：何らかの抽象的なデータ集合を元に、一定の処理や演算を行って画像や映像、音声などを生成すること。
+
+▼疑問
+・requestクラスは何か、pathから特定の関数等にアクセスすることはわかるが具体的な挙動がいまいちイメージできない
+
+・htmlファイルにある{% extends "main/main_base.html" %}という御呪いは、どういう効果があるのか？
+
+
+
+基本の流れ
+・views.pyを編集
+・htmlを作成
+・urlを編集
+
+
+・開発環境再度立ち上げの際は、
+docker-compose -f docker-compose.development.yml up
+これ使う
+https://kino-tad.backlog.com/alias/wiki/1726013
+
+
+・dockerのターミナルの出力は、dockerdesktopからdockerのターミナル情報が見えるので、そこからプログラムのデバックを行う
+
+===========HTML・CSSの話====================
+・class属性は、1ファイル内で、複数回使えるが、id属性は無理
+
+
+
+===========shopifyブログの書き方ルール====================
+・ボタン名を画像に挿入するときは、「」で括る
+・WEBサイトの引用の書き方は以下のようにする
+▼参考資料<br>
+1）2020年のShopify 成長率を発表.<br>
+[https://prtimes.jp/main/html/rd/p/000000067.000034630.html](https://prtimes.jp/main/html/rd/p/000000067.000034630.html),（参照：2022-05-09）<br>
+2）Q4 2021 Results<br>
+[https://s27.q4cdn.com/572064924/files/doc_financials/2021/q4/Shopify-Investor-Deck-Q4-2021.pdf](https://s27.q4cdn.com/572064924/files/doc_financials/2021/q4/Shopify-Investor-Deck-Q4-2021.pdf),（参照：2022-05-09）<br>
+
+・mdでの上付きの書き方
+<sup>1）</sup>
